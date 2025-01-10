@@ -27,22 +27,6 @@
         ]
       },
       {
-        "title": "Computer-Based Testing Application",
-        "startDate": "2024",
-        "description": "Personal project for study subject. This project is a Computer-Based Testing (CBT) Application implemented in C++, designed to facilitate user authentication (as students or administrators), administer multiple-choice tests, and manage user registrations. It includes features such as question skipping, score calculation, and script review, making it a comprehensive platform for educational assessments.",
-        "images": [
-          "images/portfolio/photography/p1.PNG",
-          "images/portfolio/photography/p2.PNG"
-        ],
-        "url": "",
-        "technologies": [
-          {
-            "class": "devicon-cplusplus-plain",
-            "name": "C++"
-          }
-        ]
-      },
-      {
         "title": "PayVantage Dashboard",
         "startDate": "2025",
         "description": "Developed an interactive Power BI dashboard during my internship at PayVantage to visualize and analyze key metrics, including completed transactions, successful transactions, network performance, and response rates, providing actionable insights for the company's daily operations.",
@@ -55,6 +39,22 @@
           {
             "class": "devicon-tableau-plain",
             "name": "PowerBi"
+          }
+        ]
+      },
+      {
+        "title": "Computer-Based Testing Application",
+        "startDate": "2024",
+        "description": "Personal project for study subject. This project is a Computer-Based Testing (CBT) Application implemented in C++, designed to facilitate user authentication (as students or administrators), administer multiple-choice tests, and manage user registrations. It includes features such as question skipping, score calculation, and script review, making it a comprehensive platform for educational assessments.",
+        "images": [
+          "images/portfolio/photography/p1.PNG",
+          "images/portfolio/photography/p2.PNG"
+        ],
+        "url": "",
+        "technologies": [
+          {
+            "class": "devicon-cplusplus-plain",
+            "name": "C++"
           }
         ]
       }
