@@ -15,7 +15,7 @@
         "startDate": "2025",
         "description": "An event management system implemented in C++ to manage event creation, participant registration, check-ins, scheduling, and reporting, using data structures like trees, queues, and stacks.",
         "images": [
-          "images/portfolio/animal-shelter/p1.PNGg",
+          "images/portfolio/animal-shelter/p1.PNG",
           "images/portfolio/animal-shelter/p2.PNG"
         ],
         "url": "",
