@@ -29,6 +29,11 @@
           "level": "25"
         },
         {
+          "name": "React",
+          "class": "devicon-react-original",
+          "level": "50"
+        },
+        {
           "name": "PowerBi",
           "class": "devicon-tableau-plain",
           "level": "60"
