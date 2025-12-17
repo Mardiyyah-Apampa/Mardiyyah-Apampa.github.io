@@ -1,7 +1,7 @@
 {
     "basic_info": {
       "name": "Apampa Mardiyyah",
-      "titles": [ "Computer Science Major", "Data Analyst" ],
+      "titles": [ "Computer Science Major", "Full-Stack Developer" ],
       "social": [
         {
           "name": "github",
@@ -26,12 +26,12 @@
         {
           "name": "Python",
           "class": "devicon-python-plain",
-          "level": "25"
+          "level": "50"
         },
         {
           "name": "React",
           "class": "devicon-react-original",
-          "level": "50"
+          "level": "75"
         },
         {
           "name": "PowerBi",
@@ -41,12 +41,22 @@
         {
           "name": "Rust",
           "class": "devicon-rust-plain",
-          "level": "25"
+          "level": "40"
+        },
+        {
+          "name": "PHP",
+          "class": "devicon-php-plain",
+          "level": "75"
+        },
+        {
+          "name": "PostgreSQL",
+          "class": "devicon-postgresql-plain",
+          "level": "80"
         },
         {
           "name": "MySql",
           "class": "devicon-mysql-plain",
-          "level": "45"
+          "level": "75"
         }
       ]
     }
