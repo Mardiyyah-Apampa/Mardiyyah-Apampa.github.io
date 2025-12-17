@@ -49,6 +49,16 @@
           "level": "75"
         },
         {
+          "name": "HTML",
+          "class": "devicon-html-plain",
+          "level": "80"
+        },
+        {
+          "name": "CSS",
+          "class": "devicon-css-plain",
+          "level": "80"
+        },
+        {
           "name": "PostgreSQL",
           "class": "devicon-postgresql-plain",
           "level": "80"
