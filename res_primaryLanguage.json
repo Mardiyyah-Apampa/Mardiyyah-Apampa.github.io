@@ -31,8 +31,8 @@
         "startDate": "2025",
         "description": "This project is a social networking web application developed as a work task for triBBBal LLC. The platform supports core social features such as user interactions through follow and unfollow functionality, event creation and management, and real-time chat. It also incorporates AJAX-based interactions to enable dynamic content updates without page reloads, improving responsiveness and user experience. The project emphasizes scalable design, real-time communication, and efficient user engagement within a modern web application.",
         "images": [
-          "images/portfolio/photography/p1.PNG",
-          "images/portfolio/photography/p2.PNG"
+          "images/portfolio/photography/P1.png",
+          "images/portfolio/photography/p2.png"
         ],
         "url": "",
         "technologies": [
