@@ -1,7 +1,11 @@
 {
     "basic_info": {
       "description_header": "Hi",
-      "description": "👋 I'm Apampa Mardiyyah, a third-year student at Pan Atlantic University with a strong interest in software development and data analysis. I have experience using Power BI for data visualization, and I am proficient in C++ for backend development. Additionally, I am exploring Rust and Python to broaden my technical skill set. I’m always eager to learn, tackle new challenges, and improve my abilities through hands-on experience.",
+      "description": "👋 I'm Apampa Mardiyyah, a final-year Computer Science student at Pan-Atlantic University with strong experience in full-stack software development. 
+        I have worked with both relational and NoSQL databases, including MySQL and MongoDB. I build scalable, user-focused applications. 
+        My academic and practical interests lie at the intersection of software engineering, Artificial Intelligence, robotics, and Human–Computer Interaction (HCI). I am currently working on my final-year project in HCI, 
+        which focuses on the design of a voice-controlled robot interface for people with limited mobility, applying core HCI principles to improve accessibility, usability, and human–robot interaction. My long-term goal is to build intelligent, human-centered AI and robotic systems that solve real-world problems. 
+        I am highly motivated, detail-oriented, and committed to continuous learning and impactful innovation."
       "section_name": {
         "about": "About me",
         "projects": "Projects",
@@ -27,9 +31,9 @@
         ]
       },
       {
-        "title": "Computer-Based Testing Application",
-        "startDate": "2024",
-        "description": "Personal project for study subject. This project is a Computer-Based Testing (CBT) Application implemented in C++, designed to facilitate user authentication (as students or administrators), administer multiple-choice tests, and manage user registrations. It includes features such as question skipping, score calculation, and script review, making it a comprehensive platform for educational assessments.",
+        "title": "Social Networking Platform",
+        "startDate": "2025",
+        "description": "This project is a social networking web application developed as a work task for triBBBal LLC. The platform supports core social features such as user interactions through follow and unfollow functionality, event creation and management, and real-time chat. It also incorporates AJAX-based interactions to enable dynamic content updates without page reloads, improving responsiveness and user experience. The project emphasizes scalable design, real-time communication, and efficient user engagement within a modern web application.",
         "images": [
           "images/portfolio/photography/p1.PNG",
           "images/portfolio/photography/p2.PNG"
