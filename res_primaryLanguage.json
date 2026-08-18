@@ -26,6 +26,30 @@
           }
         ]
       },
+        {
+        "title": "Voice-Controlled Robot Interface",
+        "startDate": "2026",
+        "description": "An HCI-based voice-controlled robot interface for hands-free navigation by users with physical disabilities.",
+        "images": [
+          "images/portfolio/animal-shelter/p1.PNG",
+          "images/portfolio/animal-shelter/p2.PNG"
+        ],
+        "url": "",
+        "technologies": [
+          {
+            "class": "devicon-python-original",
+            "name": "Python"
+          },
+            {
+            "class": "devicon-csharp-plain",
+            "name": "C#"
+          },
+            {
+            "class": "devicon-unity-plain",
+            "name": "Unity"
+          }
+        ]
+      },
       {
         "title": "Social Networking Platform",
         "startDate": "2025",
