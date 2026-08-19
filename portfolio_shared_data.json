@@ -64,8 +64,8 @@
           "level": "80"
         },
         {
-          "name": "CSS",
-          "class": "devicon-css-plain",
+          "name": "CSS 3",
+          "class": "devicon-css3-plain",
           "level": "80"
         },
         {
@@ -73,6 +73,11 @@
           "class": "devicon-postgresql-plain",
           "level": "80"
         },
+        {
+        "name": "MongoDB",
+        "class": "devicon-mongodb-plain",
+        "level": "40"
+      },
         {
           "name": "MySql",
           "class": "devicon-mysql-plain",
