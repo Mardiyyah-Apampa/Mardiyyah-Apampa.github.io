@@ -44,6 +44,16 @@
           "level": "40"
         },
         {
+          "name": "Unity",
+          "class": "devicon-unity-plain",
+          "level": "70"
+        },
+        {
+          "name": "C#",
+          "class": "devicon-csharp-plain",
+          "level": "40"
+        },
+        {
           "name": "PHP",
           "class": "devicon-php-plain",
           "level": "75"

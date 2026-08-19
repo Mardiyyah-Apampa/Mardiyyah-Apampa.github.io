@@ -15,8 +15,8 @@
         "startDate": "2025",
         "description": "A Student Marketplace for Learning and Earning.",
         "images": [
-          "images/portfolio/animal-shelter/p1.PNG",
-          "images/portfolio/animal-shelter/p2.PNG"
+          "images/portfolio/campuscart/p1.PNG",
+          "images/portfolio/campuscart/p2.PNG"
         ],
         "url": "",
         "technologies": [
@@ -36,7 +36,7 @@
         "url": "",
         "technologies": [
           {
-            "class": "devicon-python-original",
+            "class": "devicon-python-plain",
             "name": "Python"
           },
             {
@@ -54,8 +54,8 @@
         "startDate": "2025",
         "description": "This project is a social networking web application developed as a work task for triBBBal LLC. The platform supports core social features such as user interactions through follow and unfollow functionality, event creation and management, and real-time chat. It also incorporates AJAX-based interactions to enable dynamic content updates without page reloads, improving responsiveness and user experience. The project emphasizes scalable design, real-time communication, and efficient user engagement within a modern web application.",
         "images": [
-          "images/portfolio/photography/P1.png",
-          "images/portfolio/photography/p2.png"
+          "images/portfolio/triBBBalsite/P1.png",
+          "images/portfolio/triBBBalsite/p2.png"
         ],
         "url": "",
         "technologies": [
@@ -70,8 +70,8 @@
         "startDate": "2025",
         "description": "Developed an interactive Power BI dashboard during my internship at PayVantage to visualize and analyze key metrics, including completed transactions, successful transactions, network performance, and response rates, providing actionable insights for the company's daily operations.",
         "images": [
-          "images/portfolio/adventure/p1.PNG",
-          "images/portfolio/adventure/p2.PNG"
+          "images/portfolio/payvantage/p1.PNG",
+          "images/portfolio/payvantage/p2.PNG"
         ],
         "url": "",
         "technologies": [
