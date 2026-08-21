@@ -23,7 +23,7 @@
     />
     <link href="/static/css/2.d64471e2.chunk.css" rel="stylesheet" />
     <link href="/static/css/main.fe44ea1e.chunk.css" rel="stylesheet" />
-        <style>
+    <style>
       #resume-button-container {
         margin-top: 20px;
         text-align: center;
@@ -54,6 +54,20 @@
 
       #resume-button i {
         font-size: 15px;
+      }
+
+      .description-project-link {
+        display: inline-block;
+        margin-left: 8px;
+        color: #d90166;
+        font-size: 16px;
+        vertical-align: middle;
+        transition: 0.2s ease;
+      }
+
+      .description-project-link:hover {
+        color: #a8004f;
+        transform: translateY(-1px);
       }
     </style>
   </head>
@@ -309,5 +323,29 @@
           });
       });
     </script>
+    <script>
+  const projectLinkObserver = new MutationObserver(function () {
+    const modal = document.querySelector(".modal-inside");
+
+    if (!modal) return;
+
+    const description = modal.querySelector(".modal-description");
+    const existingLink = modal.querySelector(".link-href");
+
+    if (!description || !existingLink) return;
+
+    if (description.querySelector(".description-project-link")) return;
+
+    existingLink.classList.add("description-project-link");
+
+    description.appendChild(document.createTextNode(" "));
+    description.appendChild(existingLink);
+  });
+
+  projectLinkObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+</script>
   </body>
 </html>
