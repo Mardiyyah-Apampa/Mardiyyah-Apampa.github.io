@@ -267,85 +267,79 @@
 
     <script src="/static/js/2.210ade3f.chunk.js"></script>
     <script src="/static/js/main.fd06b3bd.chunk.js"></script>
-    <!-- Resume Button -->
+   <!-- Resume Button -->
     <script>
+      function addResumeButton() {
+        var themeSwitch =
+          document.getElementById("icon-switch") ||
+          document.querySelector(".react-switch");
+
+        if (!themeSwitch) {
+          setTimeout(addResumeButton, 300);
+          return;
+        }
+
+        if (document.getElementById("resume-button-container")) {
+          return;
+        }
+
+        var container = document.createElement("div");
+        container.id = "resume-button-container";
+
+        var button = document.createElement("a");
+        button.id = "resume-button";
+
+        button.href = "https://drive.google.com/file/d/1GhVim5xU59Yh82avEHgZYWsStiHSUPTv/view?usp=sharing";
+        button.target = "_blank";
+        button.rel = "noopener noreferrer";
+
+        button.innerHTML =
+          '<i class="fas fa-file-alt"></i><span> View Resume</span>';
+
+        container.appendChild(button);
+
+        var switchContainer = themeSwitch.closest(".react-switch") || themeSwitch;
+
+        switchContainer.insertAdjacentElement("afterend", container);
+      }
+
       window.addEventListener("load", function () {
-        fetch("/portfolio_shared_data.json")
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (data) {
-            var resumeLink =
-              data.basic_info && data.basic_info.resume
-                ? data.basic_info.resume
-                : null;
-
-            if (!resumeLink) {
-              return;
-            }
-
-            function addResumeButton() {
-              var themeSwitch = document.getElementById("icon-switch");
-
-              if (!themeSwitch) {
-                setTimeout(addResumeButton, 300);
-                return;
-              }
-
-              if (document.getElementById("resume-button-container")) {
-                return;
-              }
-
-              var container = document.createElement("div");
-              container.id = "resume-button-container";
-
-              var button = document.createElement("a");
-              button.id = "resume-button";
-              button.href = resumeLink;
-              button.target = "_blank";
-              button.rel = "noopener noreferrer";
-
-              button.innerHTML =
-                '<i class="fas fa-file-alt"></i><span> View Resume</span>';
-
-              container.appendChild(button);
-
-              themeSwitch.parentNode.insertBefore(
-                container,
-                themeSwitch.nextSibling
-              );
-            }
-
-            addResumeButton();
-          })
-          .catch(function (error) {
-            console.error("Could not load resume link:", error);
-          });
+        setTimeout(addResumeButton, 500);
       });
     </script>
+   <!-- Move project link beside description -->
     <script>
-  const projectLinkObserver = new MutationObserver(function () {
-    const modal = document.querySelector(".modal-inside");
+      function moveProjectLink() {
+        var description = document.querySelector(
+          ".modal-inside .modal-description"
+        );
 
-    if (!modal) return;
+        var projectLink = document.querySelector(
+          ".modal-inside .link-href"
+        );
 
-    const description = modal.querySelector(".modal-description");
-    const existingLink = modal.querySelector(".link-href");
+        if (!description || !projectLink) {
+          return;
+        }
 
-    if (!description || !existingLink) return;
+        if (projectLink.classList.contains("description-project-link")) {
+          return;
+        }
 
-    if (description.querySelector(".description-project-link")) return;
+        projectLink.classList.add("description-project-link");
 
-    existingLink.classList.add("description-project-link");
+        description.appendChild(document.createTextNode(" "));
+        description.appendChild(projectLink);
+      }
 
-    description.appendChild(document.createTextNode(" "));
-    description.appendChild(existingLink);
-  });
+      var projectLinkObserver = new MutationObserver(function () {
+        moveProjectLink();
+      });
 
-  projectLinkObserver.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-</script>
+      projectLinkObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    </script>
   </body>
 </html>
