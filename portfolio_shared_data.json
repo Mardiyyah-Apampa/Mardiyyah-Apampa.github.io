@@ -2,8 +2,7 @@
     "basic_info": {
       "name": "Apampa Mardiyyah",
       "titles": [ "Computer Science Major", "Full-Stack Developer" ],
-      "resume": "https://drive.google.com/file/d/1GhVim5xU59Yh82avEHgZYWsStiHSUPTv/view?usp=sharing",
-
+      
       "social": [
         {
           "name": "github",
@@ -16,7 +15,9 @@
           "class": "fab fa-linkedin"
         }
       ],
-      "image": "myProfile.jpg"
+      "image": "myProfile.jpg",
+      "resume": "https://drive.google.com/file/d/1GhVim5xU59Yh82avEHgZYWsStiHSUPTv/view?usp=sharing"
+
     },
     "skills": {
       "icons": [
