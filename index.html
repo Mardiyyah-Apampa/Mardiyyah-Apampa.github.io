@@ -23,6 +23,39 @@
     />
     <link href="/static/css/2.d64471e2.chunk.css" rel="stylesheet" />
     <link href="/static/css/main.fe44ea1e.chunk.css" rel="stylesheet" />
+        <style>
+      #resume-button-container {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #resume-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 22px;
+        background-color: #d90166;
+        color: white;
+        border: 2px solid #d90166;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      #resume-button:hover {
+        background-color: transparent;
+        color: #d90166;
+        text-decoration: none;
+        transform: translateY(-2px);
+      }
+
+      #resume-button i {
+        font-size: 15px;
+      }
+    </style>
   </head>
 
   <body data-theme="light">
@@ -220,5 +253,61 @@
 
     <script src="/static/js/2.210ade3f.chunk.js"></script>
     <script src="/static/js/main.fd06b3bd.chunk.js"></script>
+    <!-- Resume Button -->
+    <script>
+      window.addEventListener("load", function () {
+        fetch("/portfolio_shared_data.json")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            var resumeLink =
+              data.basic_info && data.basic_info.resume
+                ? data.basic_info.resume
+                : null;
+
+            if (!resumeLink) {
+              return;
+            }
+
+            function addResumeButton() {
+              var themeSwitch = document.getElementById("icon-switch");
+
+              if (!themeSwitch) {
+                setTimeout(addResumeButton, 300);
+                return;
+              }
+
+              if (document.getElementById("resume-button-container")) {
+                return;
+              }
+
+              var container = document.createElement("div");
+              container.id = "resume-button-container";
+
+              var button = document.createElement("a");
+              button.id = "resume-button";
+              button.href = resumeLink;
+              button.target = "_blank";
+              button.rel = "noopener noreferrer";
+
+              button.innerHTML =
+                '<i class="fas fa-file-alt"></i><span> View Resume</span>';
+
+              container.appendChild(button);
+
+              themeSwitch.parentNode.insertBefore(
+                container,
+                themeSwitch.nextSibling
+              );
+            }
+
+            addResumeButton();
+          })
+          .catch(function (error) {
+            console.error("Could not load resume link:", error);
+          });
+      });
+    </script>
   </body>
 </html>
