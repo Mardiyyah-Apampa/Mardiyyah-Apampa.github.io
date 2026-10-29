@@ -41,7 +41,7 @@ export const education = [
     degree: 'BSc. Computer Science',
     dates: '10/2022 – 07/2026',
     location: 'Lagos, Nigeria',
-    details: 'CGPA: 4.55 / 5.0',
+    details: 'Degree Class: First Class Honours',
     coursework: ['Artificial Intelligence', 'Machine Learning', 'Deep Learning', 'Data Management', 'HCI'],
   },
 ];
