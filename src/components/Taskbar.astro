@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+import Terminal from './Terminal.astro';
+import { site } from '../data/site';
+
+const dock = [
+  { label: 'GitHub', href: site.links.github, icon: 'github', external: true },
+  { label: 'LinkedIn', href: site.links.linkedin, icon: 'linkedin', external: true },
+  { label: 'Email', href: `mailto:${site.email}`, icon: 'mail', external: false },
+] as const;
+---
+
+<footer class="sticky bottom-0 z-30 mt-auto bg-mauve border-t-2 border-plum/60">
+  <div class="flex items-center justify-between gap-4 px-4 h-16">
+    <p class="hidden md:flex items-center gap-3 text-cream text-xs tracking-[0.12em] uppercase">
+      <span class="relative flex w-3.5 h-3.5">
+        <span class="absolute inset-0 rounded-full bg-sage opacity-60 animate-ping"></span>
+        <span class="relative w-3.5 h-3.5 rounded-full bg-sage"></span>
+      </span>
+      Status: {site.status}
+    </p>
+
+    <nav class="flex items-center gap-3 mx-auto md:mx-0 md:absolute md:left-1/2 md:-translate-x-1/2" aria-label="Quick links">
+      {dock.map((d) => (
+        <a
+          href={d.href}
+          aria-label={d.label}
+          title={d.label}
+          target={d.external ? '_blank' : undefined}
+          rel={d.external ? 'noopener noreferrer' : undefined}
+          class="grid place-items-center w-11 h-11 bg-paper text-plum border-2 border-plum rounded-lg shadow-[2px_2px_0_rgb(78_32_69/0.3)] hover:-translate-y-1 transition"
+        >
+          <Icon name={d.icon} size={22} />
+        </a>
+      ))}
+      <button
+        type="button"
+        data-open-terminal
+        aria-label="Open terminal"
+        title="Terminal"
+        class="grid place-items-center w-11 h-11 bg-paper text-plum border-2 border-plum rounded-lg shadow-[2px_2px_0_rgb(78_32_69/0.3)] hover:-translate-y-1 transition cursor-pointer"
+      >
+        <Icon name="terminal" size={22} />
+      </button>
+    </nav>
+
+    <span class="hidden md:block w-40"></span>
+  </div>
+</footer>
+
+<Terminal />

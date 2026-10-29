@@ -1,1 +1,206 @@
 @import "tailwindcss";
+
+/* ── Palette & fonts (use as bg-plum, text-ink, font-display, etc.) ── */
+@theme {
+  --color-cream: #fbf6ee;
+  --color-paper: #fffaf3;
+  --color-grid: #eee5d8;
+  --color-ink: #3b1834;
+  --color-plum: #4e2045;
+  --color-mauve: #8e5b7c;
+  --color-mauve-light: #b88ba8;
+  --color-pink: #f2a5b3;
+  --color-blush: #fbdde0;
+  --color-sage: #a8d4a3;
+  --color-sage-light: #dcefd8;
+  --color-lavender: #a7b2dc;
+  --color-lavender-light: #e3e6f6;
+  --color-muted: #7d6577;
+
+  --font-mono: "Space Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Smooth page-to-page transitions (Chrome, Edge, Safari). */
+@view-transition {
+  navigation: auto;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-cream text-ink font-mono;
+  min-height: 100dvh;
+  background-image:
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-pink);
+  color: var(--color-ink);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px dashed var(--color-mauve);
+  outline-offset: 3px;
+}
+
+/* ── Window frame ── */
+.win {
+  @apply bg-paper border-2 border-plum rounded-md;
+  box-shadow: 6px 6px 0 rgb(78 32 69 / 0.12);
+  view-transition-name: main-window;
+}
+
+.win-bar {
+  @apply bg-plum text-cream flex items-center justify-between px-3 h-9 text-sm;
+}
+
+.win-btn {
+  @apply grid place-items-center w-5 h-5 bg-cream text-plum border border-cream/60 rounded-[2px];
+}
+
+/* ── Chips / tags ── */
+.chip {
+  @apply inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] rounded-sm border;
+  background: var(--color-lavender-light);
+  border-color: var(--color-lavender);
+}
+
+.chip-pink {
+  background: var(--color-blush);
+  border-color: var(--color-pink);
+}
+
+.chip-sage {
+  background: var(--color-sage-light);
+  border-color: var(--color-sage);
+}
+
+/* ── Buttons ── */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 px-3 py-1.5 text-xs border-2 border-plum rounded-md bg-paper text-plum transition;
+  box-shadow: 2px 2px 0 rgb(78 32 69 / 0.15);
+}
+
+.btn:hover {
+  @apply bg-blush;
+}
+
+.btn-primary {
+  @apply bg-mauve text-cream border-plum;
+}
+
+.btn-primary:hover {
+  @apply bg-plum;
+}
+
+/* ── Desktop icons ── */
+.desk-icon {
+  @apply flex flex-col items-center gap-2 text-sm text-ink no-underline select-none;
+}
+
+.desk-icon svg {
+  transition: transform 0.2s ease;
+  filter: drop-shadow(3px 3px 0 rgb(78 32 69 / 0.12));
+}
+
+.desk-icon:hover svg {
+  transform: translateY(-4px) rotate(-2deg);
+}
+
+.desk-icon:hover span {
+  @apply bg-plum text-cream;
+}
+
+.desk-icon span {
+  @apply px-1.5 rounded-sm transition;
+}
+
+@media (max-width: 767px) {
+  .desk-icon svg {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+/* ── Form fields ── */
+.field {
+  @apply w-full bg-paper border-2 border-plum/30 rounded-md px-3 py-2 text-sm text-ink placeholder:text-muted/60;
+}
+
+.field:focus {
+  @apply outline-none border-mauve;
+}
+
+/* ── Markdown content inside windows ── */
+.prose-desk h2 {
+  @apply text-base font-bold text-plum mt-6 mb-2;
+}
+
+.prose-desk p {
+  @apply text-sm leading-relaxed mb-3;
+}
+
+.prose-desk ul {
+  @apply list-disc pl-5 text-sm space-y-1.5 mb-3;
+}
+
+.prose-desk a {
+  @apply text-mauve underline underline-offset-2;
+}
+
+.prose-desk code {
+  @apply bg-lavender-light px-1 rounded-sm text-[0.85em];
+}
+
+/* ── Boot animation ── */
+@keyframes boot-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.boot-bar {
+  animation: boot-fill 2.2s cubic-bezier(.6, .1, .3, 1) forwards;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-mauve) 0 8px,
+    var(--color-pink) 8px 16px
+  );
+}
+
+.cursor-blink {
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes bob {
+  50% { transform: translateY(-4px); }
+}
+
+.bob {
+  animation: bob 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

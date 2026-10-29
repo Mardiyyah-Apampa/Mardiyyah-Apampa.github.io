@@ -1,0 +1,136 @@
+---
+import { site } from '../data/site';
+---
+
+<dialog
+  id="terminal"
+  data-name={site.name}
+  data-email={site.email}
+  data-github={site.links.github}
+  data-linkedin={site.links.linkedin}
+  data-resume={site.resumePdf}
+  class="m-auto w-[min(640px,calc(100vw-2rem))] p-0 bg-transparent backdrop:bg-plum/30 backdrop:backdrop-blur-[2px]"
+>
+  <div class="win" style="view-transition-name: none">
+    <div class="win-bar">
+      <span>terminal.sh</span>
+      <form method="dialog">
+        <button class="win-btn cursor-pointer" aria-label="Close terminal">✕</button>
+      </form>
+    </div>
+    <div id="term-body" class="h-80 overflow-y-auto bg-ink text-cream text-[13px] leading-relaxed p-4">
+      <div id="term-out"></div>
+      <form id="term-form" class="flex items-center gap-2">
+        <label for="term-input" class="text-sage shrink-0">guest@desktop:~$</label>
+        <input id="term-input" autocomplete="off" spellcheck="false" class="flex-1 bg-transparent outline-none focus-visible:outline-none text-cream caret-pink" />
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('terminal') as HTMLDialogElement;
+  const out = document.getElementById('term-out')!;
+  const body = document.getElementById('term-body')!;
+  const form = document.getElementById('term-form') as HTMLFormElement;
+  const input = document.getElementById('term-input') as HTMLInputElement;
+  const d = dialog.dataset;
+
+  const pages: Record<string, string> = {
+    desktop: '/desktop',
+    about: '/about',
+    projects: '/projects',
+    robotics: '/robotics',
+    resume: '/resume',
+    contact: '/contact',
+  };
+
+  const print = (text: string, color = '') => {
+    const line = document.createElement('div');
+    line.textContent = text;
+    if (color) line.style.color = color;
+    line.style.whiteSpace = 'pre-wrap';
+    out.appendChild(line);
+  };
+
+  const commands: Record<string, (arg: string) => void> = {
+    help: () =>
+      print(
+        [
+          'available commands:',
+          '  ls              list pages',
+          '  open <page>     go to a page (e.g. open projects)',
+          '  whoami          a short intro',
+          '  skills          what I work with',
+          '  resume          download my resume',
+          '  email           copy my email address',
+          '  github          open GitHub',
+          '  linkedin        open LinkedIn',
+          '  date            current date and time',
+          '  clear           clear the screen',
+          '  exit            close the terminal',
+        ].join('\n'),
+      ),
+    ls: () => print(Object.keys(pages).map((p) => p + '/').join('   '), '#a7b2dc'),
+    open: (arg) => {
+      const target = pages[arg.replace(/\/$/, '')];
+      if (!target) return print(`open: no such page "${arg}". try "ls".`, '#f2a5b3');
+      print(`opening ${arg}...`);
+      setTimeout(() => (window.location.href = target), 250);
+    },
+    whoami: () =>
+      print(`${d.name} — Computer Science graduate exploring AI, robotics and software engineering.`),
+    skills: () => print('Python · C++ · C# · Rust · PHP · React · Unity · Power BI · MySQL · PostgreSQL · MongoDB'),
+    resume: () => {
+      print('downloading resume...');
+      window.open(d.resume, '_blank');
+    },
+    email: async () => {
+      try {
+        await navigator.clipboard.writeText(d.email!);
+        print(`copied ${d.email} to clipboard ✓`, '#a8d4a3');
+      } catch {
+        print(d.email!);
+      }
+    },
+    github: () => window.open(d.github, '_blank', 'noopener'),
+    linkedin: () => window.open(d.linkedin, '_blank', 'noopener'),
+    date: () => print(new Date().toString()),
+    clear: () => (out.innerHTML = ''),
+    exit: () => dialog.close(),
+    sudo: () => print('nice try. permission denied 🙂', '#f2a5b3'),
+  };
+  commands.cd = commands.open;
+
+  const greet = () => {
+    out.innerHTML = '';
+    print(`welcome to ${d.name}'s workspace.`, '#a8d4a3');
+    print('type "help" to see what you can do.');
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const raw = input.value.trim();
+    input.value = '';
+    print(`guest@desktop:~$ ${raw}`, '#b88ba8');
+    if (!raw) return;
+    const [cmd, ...rest] = raw.split(/\s+/);
+    const fn = commands[cmd.toLowerCase()];
+    if (fn) fn(rest.join(' ').toLowerCase());
+    else print(`command not found: ${cmd}. type "help".`, '#f2a5b3');
+    body.scrollTop = body.scrollHeight;
+  });
+
+  document.querySelectorAll('[data-open-terminal]').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      if (!out.childElementCount) greet();
+      dialog.showModal();
+      input.focus();
+    }),
+  );
+
+  // Click outside the window closes it
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>

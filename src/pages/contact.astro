@@ -1,0 +1,91 @@
+---
+// 08 · Contact
+import DesktopLayout from '../layouts/DesktopLayout.astro';
+import Window from '../components/Window.astro';
+import Icon from '../components/Icon.astro';
+import Bot from '../components/Bot.astro';
+import { site } from '../data/site';
+
+const links = [
+  { label: 'GitHub', href: site.links.github, icon: 'github' },
+  { label: 'LinkedIn', href: site.links.linkedin, icon: 'linkedin' },
+  { label: 'Email', href: `mailto:${site.email}`, icon: 'mail' },
+] as const;
+---
+
+<DesktopLayout title="Contact">
+  <Window title="contact.exe">
+    <div class="grid gap-8 md:grid-cols-[1fr_200px]">
+      <div>
+        <h2 class="text-2xl font-bold">Let's build something thoughtful.</h2>
+        <p class="text-sm text-muted mt-2 max-w-lg leading-relaxed">
+          I'm always open to discussing ideas, projects or opportunities in AI, robotics and software engineering.
+        </p>
+
+        <form id="contact-form" data-formspree={site.formspreeId} data-email={site.email} class="mt-6 space-y-4 max-w-lg">
+          <label class="grid sm:grid-cols-[90px_1fr] sm:items-center gap-1 sm:gap-3 text-sm">
+            Name <input name="name" required class="field" placeholder="Your name" autocomplete="name" />
+          </label>
+          <label class="grid sm:grid-cols-[90px_1fr] sm:items-center gap-1 sm:gap-3 text-sm">
+            Email <input name="email" type="email" required class="field" placeholder="your.email@example.com" autocomplete="email" />
+          </label>
+          <label class="grid sm:grid-cols-[90px_1fr] gap-1 sm:gap-3 text-sm">
+            <span class="sm:pt-2">Message</span>
+            <textarea name="message" required rows="5" class="field resize-y" placeholder="Tell me about your idea…"></textarea>
+          </label>
+          <!-- spam trap: real people never fill this in -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" />
+          <div class="sm:pl-[102px]">
+            <button type="submit" class="btn btn-primary w-full py-2.5 cursor-pointer">Send message <Icon name="arrow" size={14} /></button>
+            <p id="form-status" class="text-xs mt-3 min-h-4" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+
+      <aside class="flex flex-col gap-3">
+        {links.map((l) => (
+          <a href={l.href} target={l.icon === 'mail' ? undefined : '_blank'} rel="noopener noreferrer" class="btn justify-start py-2.5">
+            <Icon name={l.icon} size={18} /> {l.label}
+          </a>
+        ))}
+        <div class="mt-auto pt-6 flex items-end gap-1">
+          <Bot size={80} mood="wink" class="bob shrink-0" />
+          <p class="mb-14 border-2 border-plum rounded-lg px-2 py-1.5 text-[11px] leading-snug bg-paper">Looking forward to hearing from you!</p>
+        </div>
+      </aside>
+    </div>
+  </Window>
+</DesktopLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const status = document.getElementById('form-status')!;
+  const { formspree, email } = form.dataset;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    // No Formspree ID yet → open the visitor's email app instead.
+    if (!formspree) {
+      const subject = encodeURIComponent(`Portfolio message from ${data.get('name')}`);
+      const body = encodeURIComponent(`${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`);
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      return;
+    }
+
+    status.textContent = 'Sending…';
+    try {
+      const res = await fetch(`https://formspree.io/f/${formspree}`, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error();
+      form.reset();
+      status.textContent = 'Message sent ✓ Thank you!';
+    } catch {
+      status.textContent = `Something went wrong. Please email ${email} directly.`;
+    }
+  });
+</script>

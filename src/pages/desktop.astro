@@ -1,0 +1,99 @@
+---
+// 02 · Desktop / home
+import DesktopLayout from '../layouts/DesktopLayout.astro';
+import Circuits from '../components/Circuits.astro';
+import DeskArt from '../components/DeskArt.astro';
+import Bot from '../components/Bot.astro';
+import { site } from '../data/site';
+
+const left = [
+  { name: 'about', label: 'about me', href: '/about' },
+  { name: 'projects', label: 'projects', href: '/projects' },
+  { name: 'robotics', label: 'robotics', href: '/robotics' },
+] as const;
+
+const right = [
+  { name: 'resume', label: 'resume', href: '/resume' },
+  { name: 'contact', label: 'contact', href: '/contact' },
+] as const;
+
+const replies = [
+  { q: 'Who are you?', a: `I'm the lab assistant. ${site.name.split(' ')[0]} is a CS graduate building at the edge of AI, robotics and software.` },
+  { q: 'Best project?', a: 'Try the voice-controlled robot interface. It lets users steer a robot by speech. Open robotics →' },
+  { q: 'Hiring?', a: `Great news — she's open to opportunities. The contact window is bottom-right, or email ${site.email}.` },
+  { q: 'Secret?', a: 'Press the >_ button in the taskbar and type "help". 🤫' },
+];
+---
+
+<DesktopLayout title="Desktop">
+  <Circuits />
+
+  <div class="relative flex-1 w-full max-w-6xl mx-auto px-4 sm:px-8 py-8 md:py-12 grid gap-10 md:grid-cols-[140px_1fr_140px] md:items-center">
+    <!-- Left icons -->
+    <nav class="order-2 md:order-1 grid grid-cols-3 md:grid-cols-1 gap-8 md:gap-14 justify-items-center" aria-label="Desktop">
+      {left.map((i) => (
+        <a href={i.href} class="desk-icon"><DeskArt name={i.name} /><span>{i.label}</span></a>
+      ))}
+    </nav>
+
+    <!-- Centre -->
+    <div class="order-1 md:order-2 flex flex-col items-center text-center">
+      <p class="font-display font-light text-plum leading-none tracking-[-0.02em] text-[clamp(3.2rem,11vw,8.5rem)]">PORTFOLIO</p>
+      <h1 class="mt-4 text-[clamp(1.2rem,3vw,2rem)] tracking-[0.25em] uppercase">{site.name}</h1>
+      <p class="mt-3 text-sm sm:text-base tracking-wide">{site.tagline}</p>
+
+      <!-- Lab assistant -->
+      <section class="win mt-10 w-full max-w-md text-left" style="view-transition-name: none" aria-label="Lab assistant">
+        <div class="win-bar">
+          <span>lab assistant</span>
+          <div class="flex gap-1.5" aria-hidden="true">
+            <span class="win-btn"><span class="block w-2.5 h-0.5 bg-plum mt-1.5"></span></span>
+            <span class="win-btn"><span class="block w-2.5 h-2.5 border-2 border-plum"></span></span>
+            <span class="win-btn text-xs font-bold">✕</span>
+          </div>
+        </div>
+        <div class="p-4 flex items-center gap-3">
+          <Bot size={86} class="bob shrink-0" />
+          <p id="bubble" class="relative flex-1 border-2 border-plum rounded-lg px-3 py-2 text-xs leading-relaxed bg-paper min-h-12" aria-live="polite">
+            Welcome to my workspace.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 px-4 pb-4">
+          {replies.map((r) => (
+            <button type="button" class="chip chip-pink cursor-pointer hover:bg-pink" data-answer={r.a}>{r.q}</button>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <!-- Right icons -->
+    <nav class="order-3 grid grid-cols-3 md:grid-cols-1 gap-8 md:gap-14 justify-items-center" aria-label="Desktop, continued">
+      {right.map((i) => (
+        <a href={i.href} class="desk-icon"><DeskArt name={i.name} /><span>{i.label}</span></a>
+      ))}
+    </nav>
+  </div>
+</DesktopLayout>
+
+<script>
+  try {
+    sessionStorage.setItem('booted', '1');
+  } catch {}
+
+  const bubble = document.getElementById('bubble')!;
+  let timer: number | undefined;
+
+  const type = (text: string) => {
+    clearInterval(timer);
+    bubble.textContent = '';
+    let i = 0;
+    timer = window.setInterval(() => {
+      bubble.textContent = text.slice(0, ++i);
+      if (i >= text.length) clearInterval(timer);
+    }, 18);
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('[data-answer]').forEach((btn) =>
+    btn.addEventListener('click', () => type(btn.dataset.answer!)),
+  );
+</script>

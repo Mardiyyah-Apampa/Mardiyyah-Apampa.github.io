@@ -1,0 +1,83 @@
+---
+// 04 · Projects
+import { getCollection } from 'astro:content';
+import DesktopLayout from '../../layouts/DesktopLayout.astro';
+import Window from '../../components/Window.astro';
+import Icon from '../../components/Icon.astro';
+import ProjectCover from '../../components/ProjectCover.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.find((p) => p.data.featured) ?? projects[0];
+const filters = ['All', ...new Set(projects.flatMap((p) => p.data.categories))];
+---
+
+<DesktopLayout title="Projects">
+  <Window title="projects">
+    <div class="grid gap-6 md:grid-cols-[170px_1fr]">
+      <!-- Folder filters -->
+      <aside class="flex md:flex-col gap-1 overflow-x-auto md:border-r-2 md:border-plum/15 md:pr-4" aria-label="Filter projects">
+        {filters.map((f, i) => (
+          <button
+            type="button"
+            data-filter={f}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            class="flex items-center gap-2 px-3 py-2 text-sm rounded-md text-left whitespace-nowrap cursor-pointer hover:bg-blush aria-pressed:bg-blush aria-pressed:text-plum aria-pressed:font-bold"
+          >
+            <Icon name="folder" size={16} />
+            {f === 'All' ? 'All projects' : f}
+          </button>
+        ))}
+      </aside>
+
+      <div>
+        <!-- Cards -->
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p) => (
+            <li data-cats={p.data.categories.join(',')}>
+              <a href={`/projects/${p.id}`} class="group block">
+                <ProjectCover cover={p.data.cover} class="group-hover:-translate-y-1 transition" />
+                <p class="mt-2 text-sm font-bold group-hover:text-mauve">{p.data.title}</p>
+                <p class="text-xs text-muted mt-0.5 leading-relaxed">{p.data.summary}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Featured preview -->
+        {featured && (
+          <article class="mt-8 pt-6 border-t-2 border-plum/15 grid gap-6 sm:grid-cols-[1fr_180px]">
+            <div>
+              <p class="text-xs uppercase tracking-[0.15em] text-muted">Featured</p>
+              <h2 class="text-lg font-bold mt-1">{featured.data.title}</h2>
+              <p class="text-sm mt-2 leading-relaxed">{featured.data.summary}</p>
+              <div class="flex flex-wrap gap-2 mt-3">
+                {featured.data.tools.map((t) => <span class="chip">{t}</span>)}
+              </div>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <a href={`/projects/${featured.id}`} class="btn btn-primary">Overview <Icon name="arrow" size={14} /></a>
+                {featured.data.demo && <a href={featured.data.demo} class="btn" target="_blank" rel="noopener noreferrer">Demo</a>}
+                {featured.data.github && <a href={featured.data.github} class="btn" target="_blank" rel="noopener noreferrer"><Icon name="github" size={14} /> GitHub</a>}
+              </div>
+            </div>
+            <ProjectCover cover={featured.data.cover} />
+          </article>
+        )}
+      </div>
+    </div>
+  </Window>
+</DesktopLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-cats]');
+
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter!;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      cards.forEach((c) => {
+        c.hidden = f !== 'All' && !c.dataset.cats!.split(',').includes(f);
+      });
+    }),
+  );
+</script>

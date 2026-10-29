@@ -1,16 +1,60 @@
 ---
+// 01 · Boot screen. Shown once per browser session, then skips to the desktop.
+import DesktopLayout from '../layouts/DesktopLayout.astro';
+import Circuits from '../components/Circuits.astro';
+import DeskArt from '../components/DeskArt.astro';
+import Icon from '../components/Icon.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<DesktopLayout bare>
+  <script is:inline>
+    try {
+      if (sessionStorage.getItem('booted')) location.replace('/desktop');
+    } catch {}
+  </script>
+
+  <Circuits corners={false} />
+
+  <div class="flex-1 grid place-items-center px-6 py-16">
+    <div class="flex flex-col items-center text-center w-full max-w-md">
+      <!-- Monitor -->
+      <svg class="bob" width="130" height="120" viewBox="0 0 130 120" fill="none" stroke="#4e2045" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10 30l-8-6M10 46H0M10 62l-8 6M120 30l8-6M120 46h10M120 62l8 6" stroke-width="2.5" />
+        <rect x="22" y="8" width="86" height="72" rx="8" fill="#a7b2dc" />
+        <rect x="31" y="17" width="68" height="46" rx="4" fill="#f2a5b3" />
+        <path d="M50 36a4 4 0 0 1 8 0M72 36a4 4 0 0 1 8 0" />
+        <path d="M56 46q9 7 18 0" />
+        <circle cx="61" cy="71" r="2" fill="#4e2045" /><circle cx="69" cy="71" r="2" fill="#4e2045" />
+        <path d="M55 80l-4 14h28l-4-14" fill="#a7b2dc" />
+        <rect x="40" y="94" width="50" height="8" rx="3" fill="#4e2045" />
+      </svg>
+
+      <p class="mt-8 text-2xl sm:text-3xl font-bold tracking-tight">
+        Loading desktop<span class="cursor-blink">…</span>
+      </p>
+
+      <div class="mt-5 w-full h-4 border-2 border-plum rounded-full overflow-hidden bg-paper" role="progressbar" aria-label="Loading">
+        <div class="boot-bar h-full"></div>
+      </div>
+
+      <p id="ready" class="mt-4 text-sm text-muted opacity-0 transition-opacity duration-500">Your workspace is ready.</p>
+
+      <a id="enter" href="/desktop" class="btn btn-primary mt-6 px-8 py-3 text-sm">
+        Enter desktop <Icon name="arrow" size={16} />
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute right-10 bottom-10 hidden sm:block">
+    <DeskArt name="robotics" size={96} />
+  </div>
+</DesktopLayout>
+
+<script>
+  setTimeout(() => document.getElementById('ready')?.classList.remove('opacity-0'), 2200);
+  document.getElementById('enter')?.addEventListener('click', () => {
+    try {
+      sessionStorage.setItem('booted', '1');
+    } catch {}
+  });
+</script>

@@ -1,0 +1,47 @@
+---
+// A single project, generated from each file in src/content/projects/
+import { getCollection, render } from 'astro:content';
+import DesktopLayout from '../../layouts/DesktopLayout.astro';
+import Window from '../../components/Window.astro';
+import Icon from '../../components/Icon.astro';
+import ProjectCover from '../../components/ProjectCover.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, summary, categories, tools, github, demo, cover } = project.data;
+---
+
+<DesktopLayout title={title} description={summary}>
+  <Window title={`projects / ${project.id}`}>
+    <div class="grid gap-8 md:grid-cols-[1fr_220px]">
+      <article>
+        <a href="/projects" class="text-xs text-muted hover:text-mauve inline-flex items-center gap-1"><Icon name="back" size={12} /> all projects</a>
+        <h2 class="text-2xl font-bold mt-3">{title}</h2>
+        <p class="text-sm text-muted mt-1">{summary}</p>
+        <div class="flex flex-wrap gap-2 mt-3">
+          {categories.map((c) => <span class="chip chip-pink">{c}</span>)}
+        </div>
+        <div class="prose-desk mt-4">
+          <Content />
+        </div>
+      </article>
+
+      <aside class="space-y-4">
+        <ProjectCover cover={cover} />
+        <div>
+          <p class="text-xs uppercase tracking-[0.15em] text-muted mb-2">Tools</p>
+          <div class="flex flex-wrap gap-2">{tools.map((t) => <span class="chip">{t}</span>)}</div>
+        </div>
+        <div class="flex flex-col gap-2">
+          {demo && <a href={demo} class="btn btn-primary" target="_blank" rel="noopener noreferrer">View demo <Icon name="arrow" size={14} /></a>}
+          {github && <a href={github} class="btn" target="_blank" rel="noopener noreferrer"><Icon name="github" size={14} /> Source code</a>}
+        </div>
+      </aside>
+    </div>
+  </Window>
+</DesktopLayout>

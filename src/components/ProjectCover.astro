@@ -1,0 +1,47 @@
+---
+// Illustrated thumbnail for a project card.
+interface Props {
+  cover: 'robot' | 'chart' | 'code' | 'chat';
+  class?: string;
+}
+const { cover, class: className = '' } = Astro.props;
+const bg = { robot: 'bg-sage-light', chart: 'bg-blush', code: 'bg-lavender-light', chat: 'bg-lavender-light' }[cover];
+const ink = '#4e2045';
+---
+
+<div class:list={['grid place-items-center aspect-[16/10] border-2 border-plum/70 rounded-md', bg, className]}>
+  <svg width="72" height="56" viewBox="0 0 72 56" fill="none" stroke={ink} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    {cover === 'robot' && (
+      <g>
+        <line x1="36" y1="12" x2="36" y2="5" /><circle cx="36" cy="4" r="3" fill="#f2a5b3" />
+        <rect x="18" y="12" width="36" height="28" rx="6" fill="#fffaf3" />
+        <rect x="23" y="18" width="26" height="15" rx="3" fill={ink} />
+        <path d="M29 28a3 3 0 0 1 6 0M37 28a3 3 0 0 1 6 0" stroke="#fffaf3" />
+        <path d="M8 22a10 10 0 0 0 0 12M4 18a16 16 0 0 0 0 20M64 22a10 10 0 0 1 0 12M68 18a16 16 0 0 1 0 20" stroke-width="2" />
+        <rect x="22" y="44" width="28" height="6" rx="3" fill="#a8d4a3" />
+      </g>
+    )}
+    {cover === 'chart' && (
+      <g>
+        <rect x="6" y="4" width="60" height="44" rx="4" fill="#fffaf3" />
+        <path d="M14 40V30M24 40V22M34 40V26M44 40V16M54 40V20" stroke-width="5" stroke="#f2a5b3" />
+        <path d="M12 26l12-8 10 5 10-12 12 6" stroke-width="2" />
+        <circle cx="56" cy="17" r="2.5" fill={ink} />
+      </g>
+    )}
+    {cover === 'code' && (
+      <g>
+        <path d="M26 14L12 28l14 14M46 14l14 14-14 14M40 8L32 48" stroke-width="3" />
+      </g>
+    )}
+    {cover === 'chat' && (
+      <g>
+        <path d="M6 8h38v24H22l-9 8v-8H6z" fill="#fffaf3" />
+        <path d="M30 22h36v22h-6v8l-9-8H30z" fill="#a7b2dc" />
+        <line x1="13" y1="17" x2="36" y2="17" stroke-width="2" />
+        <line x1="13" y1="24" x2="28" y2="24" stroke-width="2" />
+        <circle cx="40" cy="33" r="1.8" fill={ink} /><circle cx="48" cy="33" r="1.8" fill={ink} /><circle cx="56" cy="33" r="1.8" fill={ink} />
+      </g>
+    )}
+  </svg>
+</div>

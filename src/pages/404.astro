@@ -1,0 +1,15 @@
+---
+import DesktopLayout from '../layouts/DesktopLayout.astro';
+import Window from '../components/Window.astro';
+import Bot from '../components/Bot.astro';
+---
+
+<DesktopLayout title="Not found">
+  <Window title="error.log">
+    <div class="flex flex-col items-center text-center py-10">
+      <Bot size={110} mood="wink" class="bob" />
+      <h2 class="text-2xl font-bold mt-6">404 · file not found</h2>
+      <p class="text-sm text-muted mt-2">The page you're looking for isn't on this desktop.</p>
+    </div>
+  </Window>
+</DesktopLayout>

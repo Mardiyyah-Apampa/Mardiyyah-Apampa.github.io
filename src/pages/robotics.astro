@@ -1,0 +1,71 @@
+---
+// 05 · Robotics lab: lists every project tagged "Robotics"
+import { getCollection } from 'astro:content';
+import DesktopLayout from '../layouts/DesktopLayout.astro';
+import Window from '../components/Window.astro';
+import DeskArt from '../components/DeskArt.astro';
+import Icon from '../components/Icon.astro';
+
+const experiments = (await getCollection('projects', (p) => p.data.categories.includes('Robotics'))).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const iconFor = { robot: 'mic', chart: 'chart', code: 'gear', chat: 'chat' } as const;
+---
+
+<DesktopLayout title="Robotics">
+  <Window title="robotics-lab">
+    <header>
+      <h2 class="text-2xl font-bold">Ideas in motion</h2>
+      <p class="text-sm text-muted mt-1">Exploring robotics, perception and real-world intelligence.</p>
+    </header>
+
+    <div class="mt-6 grid gap-6 md:grid-cols-[1fr_1.15fr]">
+      <!-- Rover on a perspective grid -->
+      <div class="relative grid place-items-center min-h-72 bg-paper border-2 border-plum/15 rounded-md overflow-hidden">
+        <svg class="absolute inset-x-0 bottom-0 w-full h-1/2" viewBox="0 0 400 140" preserveAspectRatio="none" fill="none" stroke="#d8ccd4" stroke-width="1.2" aria-hidden="true">
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => <line x1={200 + (i - 4) * 18} y1="0" x2={200 + (i - 4) * 70} y2="140" />)}
+          {[10, 30, 55, 85, 120].map((y) => <line x1="0" y1={y} x2="400" y2={y} />)}
+        </svg>
+        <svg class="absolute left-5 top-5" width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="#b9adb6" stroke-width="1.5" font-family="Space Mono, monospace" font-size="11" aria-hidden="true">
+          <path d="M25 45V8M25 45h38M25 45L8 62" />
+          <text x="31" y="12" fill="#b9adb6" stroke="none">z</text>
+          <text x="58" y="40" fill="#b9adb6" stroke="none">y</text>
+          <text x="2" y="58" fill="#b9adb6" stroke="none">x</text>
+        </svg>
+        <div class="relative bob"><DeskArt name="robotics" size={190} /></div>
+      </div>
+
+      <!-- Experiments -->
+      <ul class="space-y-4">
+        {experiments.map((e) => (
+          <li class="border-2 border-plum/25 rounded-md p-4 bg-paper">
+            <div class="flex items-start gap-3">
+              <span class="grid place-items-center w-10 h-10 shrink-0 bg-blush border-2 border-plum rounded-md text-plum">
+                <Icon name={iconFor[e.data.cover]} size={20} />
+              </span>
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <h3 class="text-sm font-bold">{e.data.title}</h3>
+                  <span class="chip">{e.data.categories.filter((c) => c !== 'Robotics')[0] ?? 'Robotics'}</span>
+                </div>
+                <p class="text-xs text-muted mt-1 leading-relaxed">{e.data.summary}</p>
+                <div class="flex flex-wrap gap-1.5 mt-2">
+                  {e.data.tools.map((t) => <span class="text-[10px] px-1.5 border border-plum/20 rounded-sm">{t}</span>)}
+                </div>
+                <div class="flex flex-wrap gap-2 mt-3">
+                  <a href={`/projects/${e.id}`} class="btn">View experiment</a>
+                  {e.data.github && <a href={e.data.github} class="btn" target="_blank" rel="noopener noreferrer">Source code</a>}
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+
+        <li class="border-2 border-dashed border-plum/25 rounded-md p-4 text-sm text-muted flex items-center gap-3">
+          <Icon name="gear" class="animate-[spin_6s_linear_infinite]" />
+          Next experiment in progress…
+        </li>
+      </ul>
+    </div>
+  </Window>
+</DesktopLayout>

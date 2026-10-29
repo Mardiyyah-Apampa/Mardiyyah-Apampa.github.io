@@ -1,0 +1,38 @@
+---
+// Reusable window frame used by every inner page.
+// Usage: <Window title="about-me.txt"> ...content... </Window>
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  showBack?: boolean;
+  class?: string;
+}
+const { title, showBack = true, class: className = '' } = Astro.props;
+---
+
+<div class="w-full max-w-5xl mx-auto px-3 sm:px-6 py-6 sm:py-10">
+  <section class:list={['win overflow-hidden', className]} aria-label={title}>
+    <div class="win-bar">
+      <h1 class="font-mono text-sm tracking-wide">{title}</h1>
+      <div class="flex items-center gap-1.5">
+        <a href="/desktop" class="win-btn" aria-label="Minimise to desktop">
+          <span class="block w-2.5 h-0.5 bg-plum mt-1.5"></span>
+        </a>
+        <span class="win-btn" aria-hidden="true">
+          <span class="block w-2.5 h-2.5 border-2 border-plum"></span>
+        </span>
+        <a href="/desktop" class="win-btn text-xs font-bold" aria-label="Close and return to desktop">✕</a>
+      </div>
+    </div>
+    <div class="p-4 sm:p-6">
+      <slot />
+    </div>
+  </section>
+
+  {showBack && (
+    <a href="/desktop" class="btn mt-4">
+      <Icon name="back" size={14} /> Desktop
+    </a>
+  )}
+</div>

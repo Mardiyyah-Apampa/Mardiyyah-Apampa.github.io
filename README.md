@@ -1,43 +1,74 @@
-# Astro Starter Kit: Minimal
+# Mardiyyah Apampa · Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
+A desktop-style portfolio built with [Astro](https://astro.build) and Tailwind CSS, deployed to GitHub Pages.
+
+## Run it locally
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open http://localhost:4321.
 
-## 🚀 Project Structure
+## Where things live
 
-Inside of your Astro project, you'll see the following folders and files:
+| What you want to change | File |
+|---|---|
+| Name, email, links, bio, education, experience, skills | `src/data/site.ts` |
+| Projects (also shown on Robotics if tagged `Robotics`) | `src/content/projects/*.md` |
+| Learning log entries | `src/content/log/*.md` |
+| Resume PDF | `public/Mardiyyah_Apampa_Resume.pdf` |
+| Colours and fonts | `src/styles/global.css` |
+| Top bar / taskbar / terminal | `src/components/` |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+### Add a project
+
+Create a new file in `src/content/projects/`, e.g. `my-new-project.md`:
+
+```md
+---
+title: My New Project
+summary: One sentence about it.
+categories: [AI, Software]   # any of: AI, Robotics, Software, Data
+tools: [Python, PyTorch]
+date: 2026-10-01
+cover: code                  # robot | chart | code | chat
+github: https://github.com/Mardiyyah-Apampa/my-new-project
+order: 4
+---
+
+## Overview
+
+Write about the project here.
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Add a learning-log entry
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Create a new file in `src/content/log/`:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```md
+---
+title: What I learned this week
+date: 2026-10-29
+tags: [AI]
+takeaways:
+  - First takeaway
+  - Second takeaway
+---
 
-## 🧞 Commands
+Your notes here.
+```
 
-All commands are run from the root of the project, from a terminal:
+## Contact form
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+1. Create a free form at https://formspree.io.
+2. Copy its form ID (the part after `/f/`).
+3. Paste it into `formspreeId` in `src/data/site.ts`.
 
-## 👀 Want to learn more?
+Until then, the form opens the visitor's email app with the message filled in.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Deploy
+
+Pushing to `main` deploys automatically through `.github/workflows/deploy.yml`.
+In the GitHub repo, set **Settings → Pages → Source** to **GitHub Actions**.
