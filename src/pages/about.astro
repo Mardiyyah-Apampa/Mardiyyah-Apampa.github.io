@@ -1,8 +1,10 @@
 ---
 // 03 · About me
+import { Image } from 'astro:assets';
 import DesktopLayout from '../layouts/DesktopLayout.astro';
 import Window from '../components/Window.astro';
 import Icon from '../components/Icon.astro';
+import photo from '../assets/me.jpeg';
 import { site, profile, education, leadership, volunteering } from '../data/site';
 ---
 
@@ -11,19 +13,31 @@ import { site, profile, education, leadership, volunteering } from '../data/site
     <div class="grid gap-8 md:grid-cols-[240px_1fr]">
       <!-- ID badge -->
       <div class="flex flex-col items-center gap-4 bg-lavender-light/70 border-2 border-plum/20 rounded-md p-6 h-fit">
-        <svg width="150" height="190" viewBox="0 0 150 190" fill="none" stroke="#4e2045" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="62" y="4" width="26" height="22" rx="5" fill="#f2a5b3" />
-          <circle cx="75" cy="15" r="3.5" fill="#fffaf3" />
-          <rect x="12" y="24" width="126" height="160" rx="12" fill="#f2a5b3" />
-          <rect x="30" y="46" width="90" height="80" rx="4" fill="#fffaf3" />
-          <circle cx="75" cy="76" r="14" fill="#4e2045" />
-          <path d="M48 122c3-17 14-24 27-24s24 7 27 24z" fill="#4e2045" />
-          <line x1="40" y1="146" x2="110" y2="146" />
-          <line x1="52" y1="162" x2="98" y2="162" stroke="#fffaf3" />
-        </svg>
+        <div class="relative w-[150px] pt-3">
+          <!-- Lanyard clip -->
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 z-10 grid place-items-center w-7 h-6 bg-pink border-[3px] border-plum rounded-md">
+            <span class="w-2 h-2 rounded-full bg-paper border-2 border-plum"></span>
+          </div>
+
+          <!-- Card -->
+          <div class="bg-pink border-[3px] border-plum rounded-xl px-4 pt-6 pb-4">
+            <Image
+              src={photo}
+              alt={`Photo of ${site.name}`}
+              width={240}
+              height={280}
+              class="w-full aspect-[6/7] object-cover object-top rounded-sm border-[3px] border-plum bg-paper"
+            />
+            <div class="mt-3 mx-2 h-[3px] bg-plum rounded"></div>
+            <div class="mt-2.5 mx-6 h-[3px] bg-paper rounded"></div>
+          </div>
+        </div>
+
         <div class="text-center">
           <p class="font-bold">{site.name}</p>
-          <p class="text-xs text-muted mt-1 flex items-center justify-center gap-1"><Icon name="pin" size={12} /> {site.location}</p>
+          <p class="mt-1 flex items-center justify-center gap-1 text-xs text-muted">
+            <Icon name="pin" size={12} /> {site.location}
+          </p>
         </div>
       </div>
 
@@ -43,8 +57,8 @@ import { site, profile, education, leadership, volunteering } from '../data/site
           {education.map((e) => (
             <div class="mt-3 pl-7 text-sm">
               <p class="font-bold">{e.degree} · {e.school}</p>
-              <p class="text-xs text-muted mt-0.5">{e.dates} · {e.location} · {e.details}</p>
-              <div class="flex flex-wrap gap-2 mt-2">
+              <p class="mt-0.5 text-xs text-muted">{e.dates} · {e.location} · {e.details}</p>
+              <div class="mt-2 flex flex-wrap gap-2">
                 {e.coursework.map((c) => <span class="chip">{c}</span>)}
               </div>
             </div>
@@ -53,26 +67,34 @@ import { site, profile, education, leadership, volunteering } from '../data/site
 
         <section>
           <h3 class="flex items-center gap-2 font-bold text-sm"><Icon name="heart" /> Interests</h3>
-          <div class="flex flex-wrap gap-2 mt-3 pl-7">
+          <div class="mt-3 pl-7 flex flex-wrap gap-2">
             {profile.interests.map((i) => <span class="chip chip-pink">{i}</span>)}
           </div>
         </section>
 
         <section>
           <h3 class="flex items-center gap-2 font-bold text-sm"><Icon name="book" /> Currently learning</h3>
-          <ul class="mt-3 pl-7 text-sm space-y-1">
-            {profile.currentlyLearning.map((c) => <li class="before:content-['▸_'] before:text-mauve">{c}</li>)}
+          <ul class="mt-3 pl-7 space-y-1 text-sm">
+            {profile.currentlyLearning.map((c) => (
+              <li class="before:content-['▸_'] before:text-mauve">{c}</li>
+            ))}
           </ul>
         </section>
 
         <section>
           <h3 class="flex items-center gap-2 font-bold text-sm"><Icon name="star" /> Leadership & volunteering</h3>
-          <ul class="mt-3 pl-7 text-sm space-y-2">
+          <ul class="mt-3 pl-7 space-y-2 text-sm">
             {leadership.map((l) => (
-              <li><span class="font-bold">{l.role}</span>, {l.org} <span class="text-xs text-muted">· {l.dates}</span></li>
+              <li>
+                <span class="font-bold">{l.role}</span>, {l.org}
+                <span class="text-xs text-muted">· {l.dates}</span>
+              </li>
             ))}
             {volunteering.map((v) => (
-              <li><span class="font-bold">{v.role}</span>, {v.org} <span class="text-xs text-muted">· {v.dates}</span></li>
+              <li>
+                <span class="font-bold">{v.role}</span>, {v.org}
+                <span class="text-xs text-muted">· {v.dates}</span>
+              </li>
             ))}
           </ul>
         </section>
